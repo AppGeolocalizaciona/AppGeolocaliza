@@ -12,8 +12,8 @@ var entryButton;
 var exitButton;
 
 // Coordenadas objetivo
-const targetLat =  -34.5923424;
-const targetLong = -70.9889762;
+const targetLat =  -34.581718;
+const targetLong = -70.988756;
 const targetRadius = 20;
 let isInArea = false;
 let hasEntered = false;
