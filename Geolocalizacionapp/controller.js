@@ -85,7 +85,7 @@ function initMap(lat, long) {
 
     // Marcador personalizado con logo
     const logoIcon = L.icon({
-        iconUrl: "img/logo-aiep.png",
+        iconUrl: "img/LOGO_EMPRESA.png",
         iconSize: [50, 50], // Ajusta el tamaño
         iconAnchor: [25, 25],
         popupAnchor: [0, -25]
