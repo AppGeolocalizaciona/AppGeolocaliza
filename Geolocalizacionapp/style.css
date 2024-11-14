@@ -219,3 +219,58 @@ button:after {
     right: 0; /* Inicia desde la derecha */
 }
 
+
+
+/* Media Queries for Responsiveness */
+
+/* For tablets */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 1em;
+        margin: 1em auto;
+    }
+
+    #navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #logo {
+        width: 150px;
+    }
+
+    .button {
+        width: 100%;
+        margin: 0.5em 0;
+    }
+}
+
+/* For mobile phones */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        margin: 0.5em;
+        padding: 1em;
+    }
+
+    #navbar {
+        flex-direction: column;
+        padding: 0.5em;
+    }
+
+    #logo {
+        width: 120px;
+    }
+
+    .button {
+        width: 100%;
+        margin: 0.25em 0;
+    }
+
+    /* Map adjustments */
+    #map {
+        width: 100%;
+        height: 300px;
+    }
+}
