@@ -9,7 +9,9 @@ class PositionModel {
     }
 
     updatePosition(lat, long) {
-        const distance = map.distance([lat, long], [this.targetLat, this.targetLong]);
+        const userLatLng = L.latLng(lat, long);
+        const targetLatLng = L.latLng(this.targetLat, this.targetLong);
+        const distance = userLatLng.distanceTo(targetLatLng);
         this.isInArea = distance <= this.radius;
         return this.isInArea;
     }
@@ -67,6 +69,11 @@ class PositionController {
             attribution: '© OpenStreetMap'
         }).addTo(this.map);
 
+        // Añade un pequeño retraso para invalidar el tamaño del mapa y asegurar la visualización correcta
+        setTimeout(() => {
+            this.map.invalidateSize();
+        }, 100);
+
         const targetArea = L.circle([this.model.targetLat, this.model.targetLong], {
             color: 'red',
             fillColor: '#f03',
@@ -89,11 +96,11 @@ class PositionController {
         } else {
             this.map.userMarker.setLatLng([lat, long]);
         }
-    
+
         const userLatLng = L.latLng(lat, long);
         const targetLatLng = L.latLng(this.model.targetLat, this.model.targetLong);
         const distance = userLatLng.distanceTo(targetLatLng);
-    
+
         if (distance <= this.model.radius) {
             this.entryButton.style.display = 'inline-block';
             this.exitButton.style.display = 'inline-block';
@@ -105,7 +112,7 @@ class PositionController {
             this.rangeMessage.textContent = "Fuera de rango";
             this.model.isInArea = false;
         }
-    }    
+    }
 
     handleEntry() {
         if (this.model.isInArea && !this.model.hasEntered) {

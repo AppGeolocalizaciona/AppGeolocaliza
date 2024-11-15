@@ -13,17 +13,12 @@ body {
     min-height: 400px;
 }
 
+#map {
+    height: 100%;
+    min-height: 400px; /* Asegura una altura mínima para el contenedor del mapa */
+    width: 100%;
+}
+
 #logo {
     max-width: 60px;
-}
-
-#user-info img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-#user-name {
-    color: white;
-    font-size: 16px;
 }
