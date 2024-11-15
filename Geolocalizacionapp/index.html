@@ -5,40 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posición de usuario y área de destino</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
 
-    <nav id="navbar">
-        <div id="logo-container">
-            <img src="img/LOGO_EMPRESA.png" alt="Logo de la institución" id="logo">
-        </div>
-        <div>
-            <span class="menu-icon" onclick="toggleMenu()">
-                <img src="img/menu.png" alt="Menú"">
-            </span>
-        <ul id="menu" class="hidden">
-            <li><a href="https://api.whatsapp.com/send/?phone=56953327839&text&type=phone_number&app_absent=0">Contacto</a></li>
-            <li><a href="https://calidad.aiep.cl/historia/">Acerca de</a></li>
-        </ul>
-        </div>
-        <div id="user-info">
-            <img id="user-photo" src="img/avatar.png" alt="Foto de Usuario">
-            <span id="user-name">Nombre del Usuario</span>
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="img/LOGO_EMPRESA.png" alt="Logo de la institución" id="logo" style="max-width: 60px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="https://api.whatsapp.com/send/?phone=56953327839&text&type=phone_number&app_absent=0">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://calidad.aiep.cl/historia/">Acerca de</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div>
-        <div class="container">
-            <h1>ASISTENCIA CON TU EMPRESA</h1>
-            <p>Tu posición es: <span id="Pos">Desconocida</span></p>
-            <p id="PosLink"><a target="_blank"></a></p>
-            <div id="map-container">
-                <div id="map"></div> <!-- Aquí se mostrará el mapa -->
-            </div>
-            <button id="entryButton" disabled aria-disabled="true">Entrada</button>
-            <button id="exitButton" disabled aria-disabled="true">Salida</button>
-            <div id="rangeMessage" style="color: red; margin-top: 10px;"></div>
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <h1 class="text-center">ASISTENCIA CON TU EMPRESA</h1>
+        <p class="text-center">Tu posición es: <span id="Pos">Desconocida</span></p>
+        <p id="PosLink" class="text-center"><a target="_blank"></a></p>
+        <div id="map-container" class="border rounded mt-3">
+            <div id="map"></div>
+        </div>
+        <div class="text-center mt-3">
+            <button id="entryButton" class="btn btn-primary" disabled aria-disabled="true">Entrada</button>
+            <button id="exitButton" class="btn btn-secondary" disabled aria-disabled="true">Salida</button>
+            <div id="rangeMessage" class="text-danger mt-2"></div>
         </div>
     </div>
 

@@ -1,162 +1,133 @@
-/** @type {HTMLElement} */
-var posElt;
-/** @type {HTMLElement} */
-var posLinkElt;
-/** @type {L.Map} */
-var map;
-/** @type {L.Circle} */
-var targetArea;
-/** @type {HTMLElement} */
-var entryButton;
-/** @type {HTMLElement} */
-var exitButton;
-
-// Coordenadas objetivo
-const targetLat =  -34.5815315;
-const targetLong = -70.9886862;
-const targetRadius = 30;
-let isInArea = false;
-let hasEntered = false;
-
-window.addEventListener('load', function () {
-    posElt = document.getElementById('Pos');
-    posLinkElt = document.querySelector('#PosLink > a');
-    entryButton = document.getElementById('entryButton');
-    exitButton = document.getElementById('exitButton');
-
-    entryButton.addEventListener('click', handleEntry);
-    exitButton.addEventListener('click', handleExit);
-
-    navigator.geolocation.watchPosition(geoposOK, geoposKO, {
-        enableHighAccuracy: true
-    });
-});
-
-/** @param {GeolocationPosition} pos */
-function geoposOK(pos) {
-    var lat = pos.coords.latitude;
-    var long = pos.coords.longitude;
-
-    posElt.textContent = `${lat}, ${long}`;
-   /** posLinkElt.href = `https://maps.google.com/?q=${lat},${long}`;
-    posLinkElt.textContent = 'Mostrar tu posición en un mapa';*/
-
-    if (!map) {
-        initMap(lat, long);
+// Modelo para manejar la posición
+class PositionModel {
+    constructor(targetLat, targetLong, radius) {
+        this.targetLat = targetLat;
+        this.targetLong = targetLong;
+        this.radius = radius;
+        this.isInArea = false;
+        this.hasEntered = false;
     }
 
-    updateUserPosition(lat, long);
-}
-
-/** @param {GeolocationPositionError} err */
-function geoposKO(err) {
-    let msg;
-    switch (err.code) {
-        case err.PERMISSION_DENIED:
-            msg = "No nos has dado permiso para obtener tu posición";
-            break;
-        case err.POSITION_UNAVAILABLE:
-            msg = "Tu posición actual no está disponible";
-            break;
-        case err.TIMEOUT:
-            msg = "No se ha podido obtener tu posición en un tiempo prudencial";
-            break;
-        default:
-            msg = "Error desconocido";
-            break;
-    }
-    posElt.textContent = msg;
-}
-
-function initMap(lat, long) {
-    map = L.map('map').setView([lat, long], 15);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
-
-    targetArea = L.circle([targetLat, targetLong], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: targetRadius
-    }).addTo(map);
-
-    // Marcador personalizado con logo
-    const logoIcon = L.icon({
-        iconUrl: "img/LOGO_EMPRESA.png",
-        iconSize: [50, 50], // Ajusta el tamaño
-        iconAnchor: [25, 25],
-        popupAnchor: [0, -25]
-    });
-
-    L.marker([targetLat, targetLong], {
-            icon: logoIcon
-        }).addTo(map)
-        .bindPopup('Zona de Asistencia');
-}
-
-function updateUserPosition(lat, long) {
-    if (!map.userMarker) {
-        map.userMarker = L.marker([lat, long]).addTo(map).bindPopup('Estás aquí');
-    } else {
-        map.userMarker.setLatLng([lat, long]);
-    }
-
-    checkProximity(lat, long);
-}
-
-function checkProximity(lat, long) {
-    const distance = map.distance([lat, long], [targetLat, targetLong]);
-
-    if (distance <= targetRadius) {
-        entryButton.style.display = 'inline-block'; // Mostrar botones
-        exitButton.style.display = 'inline-block'; // Mostrar botones
-        entryButton.disabled = false;
-        exitButton.disabled = false;
-        isInArea = true;
-        rangeMessage.textContent = ""; // Limpiar el mensaje si está dentro del rango
-    } else {
-        entryButton.style.display = 'none'; // Ocultar botones
-        exitButton.style.display = 'none'; // Ocultar botones
-        entryButton.disabled = true;
-        exitButton.disabled = true;
-        isInArea = false;
-        rangeMessage.textContent = "Fuera de rango"; // Mostrar mensa
+    updatePosition(lat, long) {
+        const distance = map.distance([lat, long], [this.targetLat, this.targetLong]);
+        this.isInArea = distance <= this.radius;
+        return this.isInArea;
     }
 }
 
-function handleEntry() {
-    if (isInArea && !hasEntered) {
-        if (confirm("¿Deseas marcar tu entrada?")) {
-            alert("Entrada marcada");
-            hasEntered = true;
-            disableButtons();
+// Controlador para manejar la lógica de interacción
+class PositionController {
+    constructor(model) {
+        this.model = model;
+        this.map = null;
+        this.entryButton = document.getElementById('entryButton');
+        this.exitButton = document.getElementById('exitButton');
+        this.posElt = document.getElementById('Pos');
+        this.rangeMessage = document.getElementById('rangeMessage');
+    }
+
+    init() {
+        this.setupEventListeners();
+        navigator.geolocation.watchPosition(this.geoposOK.bind(this), this.geoposKO.bind(this), {
+            enableHighAccuracy: true
+        });
+    }
+
+    setupEventListeners() {
+        this.entryButton.addEventListener('click', this.handleEntry.bind(this));
+        this.exitButton.addEventListener('click', this.handleExit.bind(this));
+    }
+
+    geoposOK(pos) {
+        const lat = pos.coords.latitude;
+        const long = pos.coords.longitude;
+        this.posElt.textContent = `${lat}, ${long}`;
+
+        if (!this.map) {
+            this.initMap(lat, long);
+        }
+
+        this.updateUserPosition(lat, long);
+    }
+
+    geoposKO(err) {
+        const errorMsg = {
+            [err.PERMISSION_DENIED]: "No has dado permiso para obtener tu posición",
+            [err.POSITION_UNAVAILABLE]: "Posición no disponible",
+            [err.TIMEOUT]: "Tiempo de espera excedido",
+            "default": "Error desconocido"
+        };
+        this.posElt.textContent = errorMsg[err.code] || errorMsg["default"];
+    }
+
+    initMap(lat, long) {
+        this.map = L.map('map').setView([lat, long], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(this.map);
+
+        const targetArea = L.circle([this.model.targetLat, this.model.targetLong], {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: this.model.radius
+        }).addTo(this.map);
+
+        L.marker([this.model.targetLat, this.model.targetLong], {
+            icon: L.icon({
+                iconUrl: "img/LOGO_EMPRESA.png",
+                iconSize: [50, 50],
+                iconAnchor: [25, 25]
+            })
+        }).addTo(this.map).bindPopup('Zona de Asistencia');
+    }
+
+    updateUserPosition(lat, long) {
+        if (!this.map.userMarker) {
+            this.map.userMarker = L.marker([lat, long]).addTo(this.map).bindPopup('Estás aquí');
+        } else {
+            this.map.userMarker.setLatLng([lat, long]);
+        }
+
+        if (this.model.updatePosition(lat, long)) {
+            this.entryButton.style.display = 'inline-block';
+            this.exitButton.style.display = 'inline-block';
+            this.rangeMessage.textContent = "";
+        } else {
+            this.entryButton.style.display = 'none';
+            this.exitButton.style.display = 'none';
+            this.rangeMessage.textContent = "Fuera de rango";
         }
     }
-}
 
-function handleExit() {
-    if (isInArea && hasEntered) {
-        if (confirm("¿Deseas marcar tu salida?")) {
-            alert("Salida marcada");
-            hasEntered = false;
-            disableButtons();
+    handleEntry() {
+        if (this.model.isInArea && !this.model.hasEntered) {
+            if (confirm("¿Deseas marcar tu entrada?")) {
+                alert("Entrada marcada");
+                this.model.hasEntered = true;
+                this.disableButtons();
+            }
         }
     }
-}
 
-function disableButtons() {
-    entryButton.disabled = true;
-    exitButton.disabled = true;
-}
+    handleExit() {
+        if (this.model.isInArea && this.model.hasEntered) {
+            if (confirm("¿Deseas marcar tu salida?")) {
+                alert("Salida marcada");
+                this.model.hasEntered = false;
+                this.disableButtons();
+            }
+        }
+    }
 
-
-function toggleMenu() {
-    const menu = document.getElementById("menu");
-    if (menu) {
-        menu.classList.toggle("visible");
-        menu.classList.toggle("hidden");
+    disableButtons() {
+        this.entryButton.disabled = true;
+        this.exitButton.disabled = true;
     }
 }
+
+// Inicialización del modelo y controlador
+const positionModel = new PositionModel(-34.5815315, -70.9886862, 30);
+const positionController = new PositionController(positionModel);
+window.addEventListener('load', () => positionController.init());
