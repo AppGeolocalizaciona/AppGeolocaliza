@@ -141,6 +141,6 @@ class PositionController {
 }
 
 // Inicialización del modelo y controlador
-const positionModel = new PositionModel(-34.5815315, -70.9886862, 30);
+const positionModel = new PositionModel(-34.5815315, -70.9886862, 40);
 const positionController = new PositionController(positionModel);
 window.addEventListener('load', () => positionController.init());
