@@ -89,17 +89,23 @@ class PositionController {
         } else {
             this.map.userMarker.setLatLng([lat, long]);
         }
-
-        if (this.model.updatePosition(lat, long)) {
+    
+        const userLatLng = L.latLng(lat, long);
+        const targetLatLng = L.latLng(this.model.targetLat, this.model.targetLong);
+        const distance = userLatLng.distanceTo(targetLatLng);
+    
+        if (distance <= this.model.radius) {
             this.entryButton.style.display = 'inline-block';
             this.exitButton.style.display = 'inline-block';
             this.rangeMessage.textContent = "";
+            this.model.isInArea = true;
         } else {
             this.entryButton.style.display = 'none';
             this.exitButton.style.display = 'none';
             this.rangeMessage.textContent = "Fuera de rango";
+            this.model.isInArea = false;
         }
-    }
+    }    
 
     handleEntry() {
         if (this.model.isInArea && !this.model.hasEntered) {
