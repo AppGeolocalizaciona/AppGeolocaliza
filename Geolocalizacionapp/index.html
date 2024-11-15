@@ -30,12 +30,13 @@
         </div>
     </nav>
 
-    <!-- Contenido principal aquí -->
     <div class="container">
-        <!-- Elementos adicionales como el mapa, botones, etc. -->
+        <h2>Ubicación en el Mapa</h2>
+        <div id="map" style="height: 400px;"></div>
+        <button id="locateButton" class="btn btn-primary mt-3">Obtener Mi Ubicación</button>
     </div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="controller.js"></script>
+    <script type="module" src="controller.js"></script>
 </body>
 </html>

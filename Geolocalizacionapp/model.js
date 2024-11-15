@@ -1,6 +1,4 @@
 // model.js
-// Módulo de Modelo para manejar la lógica de geolocalización
-
 export const getUserPosition = () => {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
