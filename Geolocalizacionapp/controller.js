@@ -106,6 +106,9 @@ class PositionController {
             this.exitButton.style.display = 'inline-block';
             this.rangeMessage.textContent = "";
             this.model.isInArea = true;
+            this.entryButton.disabled = this.model.hasEntered;
+            this.exitButton.disabled = !this.model.hasEnte
+            
         } else {
             this.entryButton.style.display = 'none';
             this.exitButton.style.display = 'none';
@@ -119,7 +122,8 @@ class PositionController {
             if (confirm("¿Deseas marcar tu entrada?")) {
                 alert("Entrada marcada");
                 this.model.hasEntered = true;
-                this.disableButtons();
+                this.entryButton.disabled = true;
+                this.exitButton.disabled = false;
             }
         }
     }
@@ -129,7 +133,9 @@ class PositionController {
             if (confirm("¿Deseas marcar tu salida?")) {
                 alert("Salida marcada");
                 this.model.hasEntered = false;
-                this.disableButtons();
+                 this.entryButton.disabled = false;
+                this.exitButton.disabled = true;
+               
             }
         }
     }
