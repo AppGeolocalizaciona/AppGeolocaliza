@@ -133,7 +133,7 @@ class PositionController {
             if (confirm("¿Deseas marcar tu salida?")) {
                 alert("Salida marcada");
                 this.model.hasEntered = false;
-                 this.entryButton.disabled = false;
+                this.entryButton.disabled = false;
                 this.exitButton.disabled = true;
                
             }
