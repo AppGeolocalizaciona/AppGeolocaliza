@@ -155,11 +155,11 @@ window.addEventListener('load', () => positionController.init());
 document.getElementById("login-form").addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const email = document.getElementById("email").value;
+    const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
     // Validar que los campos no estén vacíos
-    if (!email || !password) {
+    if (!username || !password) {
         alert("Por favor, completa todos los campos.");
         return;
     }
@@ -171,7 +171,7 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            username: email, // Asumiendo que el campo `username` en la base de datos guarda el correo
+            username: username,
             password: password,
         }),
     })
@@ -189,4 +189,3 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
             console.error("Error al conectar con el servidor:", error);
         });
 });
-
