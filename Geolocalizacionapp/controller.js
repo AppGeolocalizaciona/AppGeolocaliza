@@ -165,7 +165,7 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
     }
 
     // Enviar datos al servidor para el login
-    fetch("http://45.236.129.24/login.php", {
+    fetch("/login.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
