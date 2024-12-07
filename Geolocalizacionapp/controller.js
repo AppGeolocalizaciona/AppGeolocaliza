@@ -150,3 +150,43 @@ class PositionController {
 const positionModel = new PositionModel(-34.5815315, -70.9886862, 40);
 const positionController = new PositionController(positionModel);
 window.addEventListener('load', () => positionController.init());
+
+// Lógica para el login
+document.getElementById("login-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    // Validar que los campos no estén vacíos
+    if (!email || !password) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    // Enviar datos al servidor para el login
+    fetch("http://45.236.129.24/login.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            username: email, // Asumiendo que el campo `username` en la base de datos guarda el correo
+            password: password,
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                alert("Inicio de sesión exitoso: Bienvenido " + data.user.username);
+                // Redirigir al dashboard o página principal
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch((error) => {
+            console.error("Error al conectar con el servidor:", error);
+        });
+});
+
