@@ -180,7 +180,7 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
             if (data.success) {
                 alert("Inicio de sesión exitoso: Bienvenido " + data.user.username);
                 // Redirigir al dashboard o página principal
-                //window.location.href = "dashboard.html";
+                window.location.href = "dashboard.html";
             } else {
                 alert("Error: " + data.message);
             }
