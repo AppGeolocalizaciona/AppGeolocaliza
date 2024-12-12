@@ -189,15 +189,3 @@ document.getElementById("login-form").addEventListener("submit", function (e) {
             console.error("Error al conectar con el servidor:", error);
         });
     });
-// Obtener el ID del usuario de la URL
-const params = new URLSearchParams(window.location.search);
-const userId = params.get("user_id");
-
-if (userId) {
-    console.log("Usuario conectado, ID:", userId);
-    // Puedes usar este ID para cargar información específica del usuario
-} else {
-    alert("No se encontró el ID del usuario. Redirigiendo al login...");
-    window.location.href = "index.html";
-}
-
