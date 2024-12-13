@@ -3,8 +3,7 @@ const params = new URLSearchParams(window.location.search);
 const userId = params.get("user_id");
 
 if (userId) {
-  document.getElementById("welcome-message").textContent = `Tu ID de usuario es: ${userId}`;
-
+  
   // Lógica para registrar entrada
   const entryButton = document.getElementById('entryButton');
   entryButton.addEventListener("click", function () {
