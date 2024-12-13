@@ -40,7 +40,3 @@ if (userId) {
         console.error("Error al conectar con el servidor:", error);
       });
   });
-} else {
-  alert("No se encontró el ID del usuario. Redirigiendo al login...");
-  window.location.href = "index.html";
-}
