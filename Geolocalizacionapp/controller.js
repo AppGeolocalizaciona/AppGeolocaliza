@@ -15,6 +15,10 @@ class PositionModel {
         this.isInArea = distance <= this.radius;
         return this.isInArea;
     }
+    disableButtons() {
+        this.entryButton.disabled = true;
+        this.exitButton.disabled = true;
+    }
 }
 
 // Controlador para manejar la lógica de interacción
@@ -136,11 +140,6 @@ class PositionController {
                
             }
         }
-    }
-
-    disableButtons() {
-        this.entryButton.disabled = true;
-        this.exitButton.disabled = true;
     }
 }
 
