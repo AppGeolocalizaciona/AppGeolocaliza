@@ -3,19 +3,14 @@ const params = new URLSearchParams(window.location.search);
 const userId = params.get("user_id");
 
 if (userId) {
-  // Mostrar un mensaje personalizado en el dashboard
-  document.getElementById("welcome-message").textContent = "Tu ID de usuario es: ${userId}";
-  console.log("Usuario conectado, ID:", userId);
-  // Puedes usar este ID para cargar datos del usuario desde el servidor
-} else {
-  alert("No se encontró el ID del usuario. Redirigiendo al login...");
-  window.location.href = "index.html"; // Redirigir al login si no hay un ID
-}
-
+  document.getElementById("welcome-message").textContent = `Tu ID de usuario es: ${userId}`;
 
   // Lógica para registrar entrada
   const entryButton = document.getElementById("entryButton");
   entryButton.addEventListener("click", function () {
+    const logType = 1; // Log type fijo para marcar entrada
+    const datetimeLog = new Date().toISOString().slice(0, 19).replace("T", " "); // Formato YYYY-MM-DD HH:MM:SS
+
     // Enviar solicitud al servidor para registrar la entrada
     fetch("/entrada.php", {
       method: "POST",
@@ -23,8 +18,9 @@ if (userId) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: userId, // Enviar el ID del usuario
-        timestamp: new Date().toISOString(), // Fecha y hora actuales
+        employee_id: userId, // Enviar el ID del empleado
+        log_type: logType, // Siempre será 1 para entrada
+        datetime_log: datetimeLog, // Fecha y hora actuales
       }),
     })
       .then((response) => response.json())
@@ -40,3 +36,7 @@ if (userId) {
         console.error("Error al conectar con el servidor:", error);
       });
   });
+} else {
+  alert("No se encontró el ID del usuario. Redirigiendo al login...");
+  window.location.href = "index.html";
+}
