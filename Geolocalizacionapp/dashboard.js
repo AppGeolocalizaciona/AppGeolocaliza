@@ -4,7 +4,7 @@ const userId = params.get("user_id");
 
 if (userId) {
   // Mostrar un mensaje personalizado en el dashboard
-  document.getElementById("welcome-message").textContent = `Tu ID de usuario es: ${userId}`;
+  document.getElementById("welcome-message").textContent = "Tu ID de usuario es: ${userId}";
   console.log("Usuario conectado, ID:", userId);
   // Puedes usar este ID para cargar datos del usuario desde el servidor
 } else {
