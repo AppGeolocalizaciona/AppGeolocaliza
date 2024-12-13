@@ -9,7 +9,8 @@ if (userId) {
   const entryButton = document.getElementById("entryButton");
   entryButton.addEventListener("click", function () {
     const logType = 1; // Log type fijo para marcar entrada
-    const datetimeLog = new Date().toISOString().slice(0, 19).replace("T", " "); // Formato YYYY-MM-DD HH:MM:SS
+    const currentDate = new Date();
+    const datetimeLog = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}:${String(currentDate.getSeconds()).padStart(2, '0')}`;
 
     // Enviar solicitud al servidor para registrar la entrada
     fetch("/entrada.php", {
