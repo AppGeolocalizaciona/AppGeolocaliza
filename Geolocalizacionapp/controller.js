@@ -63,6 +63,8 @@ class PositionController {
     }
 
     initMap(lat, long) {
+        this.entryButton.style.display = 'none';
+        this.exitButton.style.display = 'none';
         this.map = L.map('map').setView([lat, long], 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
