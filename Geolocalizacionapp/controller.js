@@ -117,16 +117,16 @@ class PositionController {
         }
     }
 
-    handleEntry() {
-        if (this.model.isInArea && !this.model.hasEntered) {
-            if (confirm("¿Deseas marcar tu entrada?")) {
-                alert("Entrada marcada");
-                this.model.hasEntered = true;
-                this.entryButton.disabled = true;
-                this.exitButton.disabled = false;
-            }
-        }
-    }
+    //handleEntry() {
+    //    if (this.model.isInArea && !this.model.hasEntered) {
+    //        if (confirm("¿Deseas marcar tu entrada?")) {
+    //            alert("Entrada marcada");
+    //            this.model.hasEntered = true;
+    //            this.entryButton.disabled = true;
+    //            this.exitButton.disabled = false;
+    //        }
+    //    }
+    //}
 
     handleExit() {
         if (this.model.isInArea && this.model.hasEntered) {
@@ -140,10 +140,10 @@ class PositionController {
         }
     }
 
-    disableButtons() {
-        this.entryButton.disabled = true;
-        this.exitButton.disabled = true;
-    }
+//    disableButtons() {
+//        this.entryButton.disabled = true;
+//        this.exitButton.disabled = true;
+//    }
 }
 
 // Inicialización del modelo y controlador

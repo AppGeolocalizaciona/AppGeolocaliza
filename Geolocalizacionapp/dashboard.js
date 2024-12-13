@@ -6,7 +6,7 @@ if (userId) {
   document.getElementById("welcome-message").textContent = `Tu ID de usuario es: ${userId}`;
 
   // Lógica para registrar entrada
-  const entryButton = document.getElementById("entryButton");
+  const entryButton = document.getElementById('entryButton');
   entryButton.addEventListener("click", function () {
     const logType = 1; // Log type fijo para marcar entrada
     const currentDate = new Date();
