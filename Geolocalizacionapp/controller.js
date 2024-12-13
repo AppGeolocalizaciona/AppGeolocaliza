@@ -107,7 +107,7 @@ class PositionController {
             this.rangeMessage.textContent = "";
             this.model.isInArea = true;
             this.entryButton.disabled = this.model.hasEntered;
-            this.exitButton.disabled = !this.model.hasEnte
+            this.exitButton.disabled = !this.model.hasEntered;
             
         } else {
             this.entryButton.style.display = 'none';
