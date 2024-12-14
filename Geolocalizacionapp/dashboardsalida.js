@@ -7,17 +7,18 @@ if (userId) {
     const currentDate = new Date();
     const datetimeLog = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}:${String(currentDate.getSeconds()).padStart(2, '0')}`;
 
+    const payloade = {
+      employee_id: userId, // Enviar el ID del empleado
+      log_type: logType, // Siempre será 1 para entrada
+      datetime_log: datetimeLog, // Fecha y hora actuales
+  };
     // Enviar solicitud al servidor para registrar la salida
     fetch("/salida.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        employee_id: userId, // Enviar el ID del empleado
-        log_type: logType, // Siempre será 2 para salida
-        datetime_log: datetimeLog, // Fecha y hora actuales
-      }),
+      body: JSON.stringify(payloade),
     })
       .then((response) => response.json())
       .then((data) => {
