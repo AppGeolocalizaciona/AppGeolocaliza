@@ -1,7 +1,3 @@
-// Obtener el ID del usuario de los parámetros de la URL
-const params = new URLSearchParams(window.location.search);
-const userId = params.get("user_id");
-
 if (userId) {
 
   // Botón de registrar salida
