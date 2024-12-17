@@ -82,3 +82,6 @@ if (userId) {
   alert("No se encontró el ID del usuario. Redirigiendo al login...");
   window.location.href = "index.html";
 }
+function logout() {
+  window.location.href = '/login.html';
+}
