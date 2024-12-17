@@ -123,8 +123,6 @@ class PositionController {
         if (this.model.isInArea && !this.model.hasEntered) {
             if (confirm("¿Deseas marcar tu entrada?")) {
                 this.model.hasEntered = true;
-                this.entryButton.disabled = true;
-                this.exitButton.disabled = false;
             }
         }
     }
@@ -133,16 +131,8 @@ class PositionController {
         if (this.model.isInArea && this.model.hasEntered) {
             if (confirm("¿Deseas marcar tu salida?")) {
                 this.model.hasEntered = false;
-                this.entryButton.disabled = false;
-                this.exitButton.disabled = true;
-               
             }
         }
-    }
-
-    disableButtons() {
-        this.entryButton.style.display = 'none';
-        this.exitButton.style.display = 'none';
     }
 }
 
