@@ -83,5 +83,5 @@ if (userId) {
   window.location.href = "index.html";
 }
 function logout() {
-  window.location.href = '/login.html';
+  window.location.href = 'https://appgeolocalizaciona.netlify.app/';
 }
