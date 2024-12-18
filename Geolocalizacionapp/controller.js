@@ -108,8 +108,8 @@ class PositionController {
             this.exitButton.style.display = 'inline-block';
             this.rangeMessage.textContent = "";
             this.model.isInArea = true;
-            this.entryButton.enable = this.model.hasEntered;
-            this.exitButton.enable = this.model.hasEntered;
+            this.entryButton.disabled = !this.model.isInArea;
+            this.exitButton.disabled = !this.model.isInArea;
             
         } else {
             this.entryButton.style.display = 'none';
